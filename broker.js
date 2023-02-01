@@ -1,7 +1,6 @@
 const { ServiceBroker } = require("moleculer");
 
 const broker = new ServiceBroker({
-  // nodeID: `broker-${process.host}`,
   logLevel: "debug",
   transporter: {
     type: "TCP",
@@ -44,7 +43,7 @@ broker.createService({
 });
 
 broker.start().then(async () => {
-  setInterval(async() => console.log(await broker.emit("$node.list")), 10000);
+  setInterval(async() => console.log(await broker.call("$node.list")), 10000);
   let id = Math.floor(Math.random() * 100000);
   setInterval(async() => await broker.broadcast("ping", { id: id++ }), 10000);
 });
